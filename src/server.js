@@ -18,10 +18,12 @@ const syncTables = () => {
     Book.sync();
 };
 
+//Checks servers health - COMPLETE
 app.get("/health", (req, res) => {
     res.status(200).json({message: "API is healthy"});
 });
 
+//Displays what server we are using - COMPLETE
 app.listen(port, () => {
     syncTables();
     console.log(`Server is listening on ${port}`)

@@ -1,5 +1,6 @@
 const Book = require("./model");
 
+//Add book to the collection
 const addBook = async (req, res) => {
     try {
         //Try this if successful
@@ -19,6 +20,17 @@ const addBook = async (req, res) => {
     }
  };
 
+ //Get all books - INCOMPLETE
+const getAllBooks = async (req, res) => {
+    try {
+        const book = await Book.findAll({});
+        res.status(201).json({message: "success, here is all the books", getAllBooks: book});
+    } catch (error) {
+        res.status(500).json({message: error.message, error: error});
+    }
+};
+
 module.exports = {
     addBook: addBook,
+    getAllBooks: getAllBooks,
 };
