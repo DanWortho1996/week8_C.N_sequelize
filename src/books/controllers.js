@@ -13,14 +13,15 @@ const addBook = async (req, res) => {
             // genre: "fiction",
             genre: req.body.genre,
         });
-        res.status(201).json({message: "success", book: book});
+        res.status(201).json({message: "success, a new book has been added", book: book});
     } catch (error) {
         //If error then does something i.e, catches the error messages and display/sends it to user
         res.status(500).json({message: error.message, error: error});
     }
  };
 
- //Get all books - INCOMPLETE
+ //Get all books - COMPLETE
+ //Thunder Client is a GET method when using the URL's
 const getAllBooks = async (req, res) => {
     try {
         const book = await Book.findAll({});
@@ -30,7 +31,39 @@ const getAllBooks = async (req, res) => {
     }
 };
 
+//Delete a book selected from the collection - COMPLETE
+//Thunder Client is a DELETE method when using the URL's
+const deletedBooks = async (req, res) => {
+    try {
+        const book = await Book.destroy({
+            where: {
+                title: req.body.title,
+            }
+        });
+        res.status(201).json({message: "success, a books has been deleted", deletedBooks: book});
+    } catch (error) {
+        res.status(500).json({message: error.message, error: error});
+    }
+};
+
+//Update author - COMPLETE
+//Thunder Client is a PUT method when using the URL's
+const updateAuthor  = async (req, res) => {
+    try {
+        const author = await Book.update({author: req.body.author}, {
+            where: {title: req.body.title}
+        })
+        res.status(201).json({message: `success`, updateAuthor: author});
+    } catch (error) {
+        res.status(500).json({message: error.message, error: error});
+    }
+};
+
+//
+
 module.exports = {
     addBook: addBook,
     getAllBooks: getAllBooks,
+    deletedBooks: deletedBooks,
+    updateAuthor: updateAuthor,
 };
