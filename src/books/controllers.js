@@ -52,18 +52,39 @@ const updateAuthor  = async (req, res) => {
     try {
         const author = await Book.update({author: req.body.author}, {
             where: {title: req.body.title}
-        })
-        res.status(201).json({message: `success`, updateAuthor: author});
+        });
+        res.status(201).json({message: `success, a new author has been added`, updateAuthor: author});
     } catch (error) {
         res.status(500).json({message: error.message, error: error});
     }
 };
 
-//
+//Get book by author
+//GET Method
+const getBookAuthor = async (req, res) => {
+    try {
+        const book = await Book.findOne({author: req.params.author});
+        res.status(201).json({message: "success", book: book})
+    } catch (error) {
+        res.status(500).json({message: error.message, error: error});
+    }
+}
+
+//params/paramaters example
+const paramsExample = async (req, res) => {
+    try {
+        console.log("req.params: ", req.params.title);
+        res.status(201).json({message: "success", params: req.params});
+    } catch (error) {
+        res.status(500).json({message: error.message, error: error});
+    }
+}
 
 module.exports = {
     addBook: addBook,
     getAllBooks: getAllBooks,
     deletedBooks: deletedBooks,
     updateAuthor: updateAuthor,
+    paramsExample: paramsExample,
+    getBookAuthor: getBookAuthor,
 };
