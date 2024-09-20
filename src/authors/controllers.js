@@ -1,5 +1,6 @@
 const { updateAuthor } = require("../books/controllers");
 const Author = require("./model");
+const Book = require ("./model");
 
 //Add an author - COMPLETE
 //PUT Method on ThunderClient
@@ -36,23 +37,30 @@ const oneAuthor = async (req, res) => {
 
 //PUT Method on ThunderClient
 //Update author book title via author - INCOMPLETE
-const updateAuthorBookTitle = async (req, res) => {
+// const updateAuthorBookTitle = async (req, res) => {
+//     try {
+//         const author = await Author.update({author: req.body.author}), ({ where: {title: req.params.title}});
+//         res.status(201).json({message: "success", updatebookauthor: author});
+//     } catch (error) {
+//         res.status(500).json({message: error.message, error: error});
+//     }
+// };
+
+//Find specific author with all their books - INCOMPLETE
+const getAuthorAndBooks = async (req, res) => {
     try {
-        const author = await Author.update({where: {title: req.body.title}});
-        res.status(201).json({message: "success", updatebookauthor: author});
+        const author = await Author.findAll({where: {name: req.params.name}, include: Book});
+        res.status(201).json({message: "success", allauthorbooks: author});
     } catch (error) {
         res.status(500).json({message: error.message, error: error});
     }
 };
-
-//Find specific author with books
-//Get author by books
 
 
 module.exports = {
     addAuthor: addAuthor,
     allAuthors: allAuthors,
     oneAuthor: oneAuthor,
-    updateAuthorBookTitle: updateAuthorBookTitle,
-    getAuthorByBooks: getAuthorByBooks,
+    // updateAuthorBookTitle: updateAuthorBookTitle,
+    getAuthorAndBooks: getAuthorAndBooks,
 };
