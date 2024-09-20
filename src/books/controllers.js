@@ -9,11 +9,12 @@ const addBook = async (req, res) => {
             // title: "seq book 1",
             title: req.body.title,
             // author: "superman",
-            author: req.body.author,
+            authorname: req.body.authorname,
             // genre: "fiction",
-            genre: req.body.genre,
+            genrename: req.body.genrename,
+            authorId: req.body.authorId,
         });
-        res.status(201).json({message: "success, a new book has been added", book: book});
+        res.status(201).json({message: "success, a new book has been added", bookadded: book});
     } catch (error) {
         //If error then does something i.e, catches the error messages and display/sends it to user
         res.status(500).json({message: error.message, error: error});

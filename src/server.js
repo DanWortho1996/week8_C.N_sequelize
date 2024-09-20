@@ -21,8 +21,12 @@ app.use(bookRouter);
 app.use(authorRouter);
 
 const syncTables = () => {
-    Book.sync();
-    Author.sync();
+    Author.hasMany(Book);
+    Book.belongsTo(Author);
+    
+    //Author must be at the top here because they would be no book without an author, it has to go in order i.e, author then book
+    Author.sync({alter: true});
+    Book.sync({alter: true});
 };
 
 //Checks servers health - COMPLETE
